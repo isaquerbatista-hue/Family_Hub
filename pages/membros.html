@@ -6,11 +6,700 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family Hub - Membros</title>
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* ─── MEMBROS PAGE STYLES ─── */
+        :root {
+            --card-radius: 12px;
+            --card-bg: var(--bg-secondary, #1e1e2e);
+            --transition: 0.2s ease;
+        }
+
+        /* Page header */
+        .membros-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .membros-header-left h2 {
+            margin: 0 0 4px 0;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .membros-header-left p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .membros-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Search bar */
+        .search-bar {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar svg {
+            position: absolute;
+            left: 10px;
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+
+        .search-bar input {
+            padding: 9px 12px 9px 34px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-main);
+            color: var(--text-primary);
+            font-size: 14px;
+            width: 220px;
+            outline: none;
+            transition: border-color var(--transition);
+        }
+
+        .search-bar input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .search-bar input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* View toggle */
+        .view-toggle {
+            display: flex;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .view-toggle button {
+            background: transparent;
+            border: none;
+            padding: 8px 11px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            transition: background var(--transition), color var(--transition);
+        }
+
+        .view-toggle button.active {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        .view-toggle button:hover:not(.active) {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        /* Add member button */
+        .btn-add-member {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity var(--transition), transform var(--transition);
+            white-space: nowrap;
+        }
+
+        .btn-add-member:hover {
+            opacity: 0.88;
+            transform: translateY(-1px);
+        }
+
+        /* Filter bar */
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .filter-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .filter-select {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-main);
+            color: var(--text-primary);
+            font-size: 13px;
+            cursor: pointer;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            padding-right: 28px;
+            transition: border-color var(--transition);
+        }
+
+        .filter-select:focus,
+        .filter-select:hover {
+            border-color: var(--accent-color);
+        }
+
+        .filter-reset {
+            margin-left: auto;
+            font-size: 13px;
+            color: var(--accent-color);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            padding: 4px 0;
+            transition: opacity var(--transition);
+        }
+
+        .filter-reset:hover {
+            opacity: 0.75;
+        }
+
+        /* Members grid */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        /* Member card */
+        .member-card {
+            background: var(--card-bg, var(--bg-secondary));
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            cursor: pointer;
+            transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        /* Avatar wrapper */
+        .member-avatar-wrap {
+            position: relative;
+            width: 56px;
+            height: 56px;
+        }
+
+        .member-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--bg-hover);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent-color);
+            overflow: hidden;
+        }
+
+        .member-avatar-initials {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--bg-hover);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-color);
+            border: 2px solid var(--border-color);
+            user-select: none;
+        }
+
+        .online-dot {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            background: #22c55e;
+            border-radius: 50%;
+            border: 2px solid var(--bg-main);
+        }
+
+        /* Role badge */
+        .role-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .role-badge.admin {
+            background: color-mix(in srgb, var(--accent-color) 18%, transparent);
+            color: var(--accent-color);
+            border: 1px solid color-mix(in srgb, var(--accent-color) 35%, transparent);
+        }
+
+        .role-badge.member {
+            background: color-mix(in srgb, var(--text-secondary) 15%, transparent);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Member info */
+        .member-info {
+            flex: 1;
+        }
+
+        .member-name {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .you-tag {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 1px 6px;
+            border-radius: 4px;
+            background: var(--bg-hover);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .member-role-title {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Member stats */
+        .member-stats {
+            display: flex;
+            gap: 20px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-top: 3px;
+        }
+
+        /* Add member card */
+        .member-card.add-card {
+            border-style: dashed;
+            border-color: var(--border-color);
+            align-items: center;
+            justify-content: center;
+            min-height: 180px;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .member-card.add-card:hover {
+            border-color: var(--accent-color);
+            background: color-mix(in srgb, var(--accent-color) 5%, transparent);
+        }
+
+        .add-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px dashed var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: border-color var(--transition), color var(--transition);
+        }
+
+        .member-card.add-card:hover .add-card-icon {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .add-card-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: color var(--transition);
+        }
+
+        .member-card.add-card:hover .add-card-label {
+            color: var(--accent-color);
+        }
+
+        /* Card action buttons (appear on hover) */
+        .card-actions {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, var(--card-bg, var(--bg-secondary)) 70%, transparent);
+            padding: 12px 14px 14px;
+            display: flex;
+            gap: 8px;
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity var(--transition), transform var(--transition);
+        }
+
+        .member-card:hover .card-actions {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-action-btn {
+            flex: 1;
+            padding: 6px 0;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: background var(--transition), border-color var(--transition);
+        }
+
+        .card-action-btn:hover {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #fff;
+        }
+
+        .card-action-btn.danger {
+            border-color: var(--danger-color);
+            color: var(--danger-color);
+        }
+
+        .card-action-btn.danger:hover {
+            background: var(--danger-color);
+            border-color: var(--danger-color);
+            color: #fff;
+        }
+
+        /* Footer bar */
+        .members-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-stats {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .footer-stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-stat-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 2px;
+        }
+
+        .footer-stat-value {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .footer-stat-value.positive {
+            color: #22c55e;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .page-btn {
+            min-width: 34px;
+            height: 34px;
+            padding: 0 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background var(--transition), color var(--transition), border-color var(--transition);
+        }
+
+        .page-btn:hover:not(:disabled) {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .page-btn.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .page-dots {
+            color: var(--text-secondary);
+            font-size: 13px;
+            padding: 0 4px;
+        }
+
+        /* Invite modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-secondary, #1e1e2e);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 28px;
+            width: 100%;
+            max-width: 460px;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+            animation: modalIn 0.2s ease;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95) translateY(8px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-secondary);
+            padding: 4px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            transition: color var(--transition), background var(--transition);
+        }
+
+        .modal-close:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-main);
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--accent-color);
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .btn-cancel {
+            padding: 9px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background var(--transition);
+        }
+
+        .btn-cancel:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .btn-invite {
+            padding: 9px 18px;
+            border-radius: 8px;
+            border: none;
+            background: var(--accent-color);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity var(--transition), transform var(--transition);
+        }
+
+        .btn-invite:hover {
+            opacity: 0.88;
+            transform: translateY(-1px);
+        }
+
+        /* ─── Stagger animation ─── */
+        .member-card {
+            animation: cardIn 0.3s ease both;
+        }
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .member-card:nth-child(1) { animation-delay: 0.04s; }
+        .member-card:nth-child(2) { animation-delay: 0.08s; }
+        .member-card:nth-child(3) { animation-delay: 0.12s; }
+        .member-card:nth-child(4) { animation-delay: 0.16s; }
+        .member-card:nth-child(5) { animation-delay: 0.20s; }
+        .member-card:nth-child(6) { animation-delay: 0.24s; }
+        .member-card:nth-child(7) { animation-delay: 0.28s; }
+    </style>
 </head>
 
 <body>
     <div id="layout-principal" class="layout-principal">
 
+        <!-- ─── SIDEBAR (preserved) ─── -->
         <aside id="menu-lateral" class="menu-lateral">
             <div class="sidebar-header">
                 <h1>Family Hub</h1>
@@ -30,6 +719,12 @@
                         <a href="tarefas.html">
                             <img class="icon" src="../assets/icons/list-solid-full.svg" alt="#">
                             <span class="menu-text">Gerenciar Tarefas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="recompensas.html">
+                            <img class="icon" src="../assets/icons/trophy-solid-full.svg" alt="#">
+                            <span class="menu-text">Gerenciar Recompensas</span>
                         </a>
                     </li>
                     <li>
@@ -63,63 +758,299 @@
             </nav>
         </aside>
 
+        <!-- ─── MAIN CONTENT ─── -->
         <main class="conteudo-principal">
-            <h2>Membros da Família</h2>
 
-            <section>
-                <h3>Lista de Membros</h3>
-                <ul>
-                    <li style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding: 12px 0;">
-                        <div>
-                            <strong>Pai</strong> <small style="color: var(--accent-color); margin-left: 8px;">(Admin)</small>
-                            <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">pai@email.com</div>
-                        </div>
-                        <button style="background: var(--bg-hover); color: var(--text-primary); border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 4px; cursor: pointer;">Editar</button>
-                    </li>
-                    <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: none;">
-                        <div>
-                            <strong>Filho 1</strong> <small style="color: var(--text-secondary); margin-left: 8px;">(Membro)</small>
-                            <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">filho@email.com</div>
-                        </div>
-                        <div>
-                            <button style="background: var(--bg-hover); color: var(--text-primary); border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 4px; cursor: pointer; margin-right: 8px;">Editar</button> 
-                            <button style="background: var(--danger-color); color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Remover</button>
-                        </div>
-                    </li>
-                </ul>
-            </section>
+            <!-- Page header -->
+            <div class="membros-header">
+                <div class="membros-header-left">
+                    <h2>Membros da Família</h2>
+                    <p>Gerencie o acesso e a estrutura familiar.</p>
+                </div>
+                <div class="membros-header-actions">
+                    <!-- Search -->
+                    <div class="search-bar">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <input type="text" placeholder="Buscar membros...">
+                    </div>
+                    <!-- View toggle -->
+                    <div class="view-toggle">
+                        <button class="active" title="Grade" id="btn-grid">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        </button>
+                        <button title="Lista" id="btn-list">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                        </button>
+                    </div>
+                    <!-- Add member -->
+                    <button class="btn-add-member" id="btn-open-modal">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Adicionar Membro
+                    </button>
+                </div>
+            </div>
 
-            <section>
-                <h3>Convidar Novo Membro</h3>
-                <form>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
-                        <div>
-                            <label style="display:block; margin-bottom: 4px; font-size: 14px;">Nome:</label>
-                            <input type="text" placeholder="Nome" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-primary);">
+            <!-- Filter bar -->
+            <div class="filter-bar">
+                <span class="filter-label">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                    Filtros
+                </span>
+                <select class="filter-select">
+                    <option>Ordenar: Recente</option>
+                    <option>Ordenar: Nome A-Z</option>
+                    <option>Ordenar: Mais Tarefas</option>
+                </select>
+                <select class="filter-select">
+                    <option>Função: Todos</option>
+                    <option>Função: Admin</option>
+                    <option>Função: Membro</option>
+                </select>
+                <select class="filter-select">
+                    <option>Status: Todos</option>
+                    <option>Status: Ativo</option>
+                    <option>Status: Inativo</option>
+                </select>
+                <button class="filter-reset">Limpar Filtros</button>
+            </div>
+
+            <!-- Members grid -->
+            <div class="members-grid" id="members-grid">
+
+                <!-- Card: Pai (Admin / You) -->
+                <div class="member-card">
+                    <span class="role-badge admin">Administrador</span>
+                    <div class="member-avatar-wrap">
+                        <div class="member-avatar-initials">P</div>
+                        <span class="online-dot"></span>
+                    </div>
+                    <div class="member-info">
+                        <div class="member-name">
+                            Pai
+                            <span class="you-tag">Você</span>
                         </div>
-                        <div>
-                            <label style="display:block; margin-bottom: 4px; font-size: 14px;">E-mail:</label>
-                            <input type="email" placeholder="E-mail" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-primary);">
+                        <div class="member-role-title">pai@email.com</div>
+                    </div>
+                    <div class="member-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">8</span>
+                            <span class="stat-label">Tarefas</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">12</span>
+                            <span class="stat-label">Concluídas</span>
                         </div>
                     </div>
-                    
-                    <div style="margin-bottom: 20px;">
-                        <label style="display:block; margin-bottom: 4px; font-size: 14px;">Cargo:</label>
-                        <select style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-primary);">
-                            <option>Membro Standard</option>
-                            <option>Administrador</option>
-                        </select>
+                    <div class="card-actions">
+                        <button class="card-action-btn">Editar</button>
                     </div>
+                </div>
 
-                    <button type="submit" style="background: var(--accent-color); color: #fff; border: none; padding: 10px 16px; border-radius: 6px; font-weight: 500; cursor: pointer;">Enviar Convite</button>
-                </form>
-            </section>
+                <!-- Card: Mãe -->
+                <div class="member-card">
+                    <span class="role-badge admin">Administrador</span>
+                    <div class="member-avatar-wrap">
+                        <div class="member-avatar-initials">M</div>
+                    </div>
+                    <div class="member-info">
+                        <div class="member-name">Mãe</div>
+                        <div class="member-role-title">mae@email.com</div>
+                    </div>
+                    <div class="member-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">5</span>
+                            <span class="stat-label">Tarefas</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">9</span>
+                            <span class="stat-label">Concluídas</span>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="card-action-btn">Editar</button>
+                    </div>
+                </div>
+
+                <!-- Card: Filho 1 -->
+                <div class="member-card">
+                    <span class="role-badge member">Membro</span>
+                    <div class="member-avatar-wrap">
+                        <div class="member-avatar-initials">F1</div>
+                        <span class="online-dot"></span>
+                    </div>
+                    <div class="member-info">
+                        <div class="member-name">Filho 1</div>
+                        <div class="member-role-title">filho@email.com</div>
+                    </div>
+                    <div class="member-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">3</span>
+                            <span class="stat-label">Tarefas</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">4</span>
+                            <span class="stat-label">Concluídas</span>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="card-action-btn">Editar</button>
+                        <button class="card-action-btn danger">Remover</button>
+                    </div>
+                </div>
+
+                <!-- Card: Filha 2 -->
+                <div class="member-card">
+                    <span class="role-badge member">Membro</span>
+                    <div class="member-avatar-wrap">
+                        <div class="member-avatar-initials">F2</div>
+                    </div>
+                    <div class="member-info">
+                        <div class="member-name">Filha 2</div>
+                        <div class="member-role-title">filha@email.com</div>
+                    </div>
+                    <div class="member-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">2</span>
+                            <span class="stat-label">Tarefas</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">6</span>
+                            <span class="stat-label">Concluídas</span>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="card-action-btn">Editar</button>
+                        <button class="card-action-btn danger">Remover</button>
+                    </div>
+                </div>
+
+                <!-- Add member card -->
+                <div class="member-card add-card" id="add-member-card">
+                    <div class="add-card-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                    </div>
+                    <span class="add-card-label">Adicionar Membro</span>
+                </div>
+
+            </div>
+
+            <!-- Footer stats + pagination -->
+            <div class="members-footer">
+                <div class="footer-stats">
+                    <div class="footer-stat">
+                        <span class="footer-stat-label">Total de Membros</span>
+                        <span class="footer-stat-value">4</span>
+                    </div>
+                    <div class="footer-stat">
+                        <span class="footer-stat-label">Ativos Agora</span>
+                        <span class="footer-stat-value">2</span>
+                    </div>
+                    <div class="footer-stat">
+                        <span class="footer-stat-label">Novos este Mês</span>
+                        <span class="footer-stat-value positive">+1</span>
+                    </div>
+                </div>
+                <div class="pagination">
+                    <button class="page-btn" disabled>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        Anterior
+                    </button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <span class="page-dots">...</span>
+                    <button class="page-btn">
+                        Próximo
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+            </div>
 
         </main>
     </div>
 
+    <!-- ─── INVITE MODAL ─── -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Convidar Novo Membro</h3>
+                <button class="modal-close" id="modal-close">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" placeholder="Ex: Filho 2">
+                </div>
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" placeholder="email@exemplo.com">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Função</label>
+                <select>
+                    <option>Membro Standard</option>
+                    <option>Administrador</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" id="btn-cancel">Cancelar</button>
+                <button class="btn-invite">Enviar Convite</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/sidebar.js"></script>
     <script src="../js/main.js"></script>
+    <script>
+        // Modal
+        const modalOverlay = document.getElementById('modal-overlay');
+        const btnOpenModal = document.getElementById('btn-open-modal');
+        const addMemberCard = document.getElementById('add-member-card');
+        const modalClose = document.getElementById('modal-close');
+        const btnCancel = document.getElementById('btn-cancel');
+
+        function openModal() { modalOverlay.classList.add('open'); }
+        function closeModal() { modalOverlay.classList.remove('open'); }
+
+        btnOpenModal.addEventListener('click', openModal);
+        addMemberCard.addEventListener('click', openModal);
+        modalClose.addEventListener('click', closeModal);
+        btnCancel.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
+
+        // View toggle
+        const btnGrid = document.getElementById('btn-grid');
+        const btnList = document.getElementById('btn-list');
+        const grid = document.getElementById('members-grid');
+
+        btnGrid.addEventListener('click', () => {
+            btnGrid.classList.add('active');
+            btnList.classList.remove('active');
+            grid.style.gridTemplateColumns = '';
+        });
+
+        btnList.addEventListener('click', () => {
+            btnList.classList.add('active');
+            btnGrid.classList.remove('active');
+            grid.style.gridTemplateColumns = '1fr';
+        });
+
+        // Danger confirmation
+        document.querySelectorAll('.card-action-btn.danger').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                if (confirm('Remover este membro da família?')) {
+                    btn.closest('.member-card').style.animation = 'cardIn 0.2s ease reverse';
+                    setTimeout(() => btn.closest('.member-card').remove(), 180);
+                }
+            });
+        });
+
+        // Keyboard close
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    </script>
 </body>
 
 </html>
