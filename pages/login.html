@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Hub - Login</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+
+<body>
+    <!-- Container principal do login -->
+    <div class="login-container">
+        <div class="login-wrapper">
+            <!-- Logo e título -->
+            <div class="login-header">
+                <div class="logo">
+                    <img src="../assets/icons/house-solid-full.svg" alt="Family Hub">
+                </div>
+                <h1>Family Hub</h1>
+                <p>Bem-vindo de volta!</p>
+            </div>
+
+            <!-- Container para as telas -->
+            <div class="auth-container">
+                <!-- Tela de Login -->
+                <div id="login-screen" class="auth-screen active">
+                    <form id="login-form" class="login-form">
+                        <!-- Campo de email -->
+                        <div class="form-group">
+                            <label for="login-email">E-mail</label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="email" 
+                                    id="login-email" 
+                                    name="email" 
+                                    placeholder="seu@email.com"
+                                    autocomplete="email"
+                                    required
+                                >
+                                <span class="input-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                        <path d="m22 7-10 5L2 7"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                            <span class="error-message" id="login-email-error"></span>
+                        </div>
+
+                        <!-- Campo de senha -->
+                        <div class="form-group">
+                            <label for="login-password">Senha</label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="login-password" 
+                                    name="password" 
+                                    placeholder="Digite sua senha"
+                                    autocomplete="current-password"
+                                    required
+                                >
+                                <button type="button" class="toggle-password" id="toggle-password" title="Mostrar/ocultar senha">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path class="eye-open" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle class="eye-open" cx="12" cy="12" r="3"></circle>
+                                        <path class="eye-closed" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                        <line class="eye-closed" x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="error-message" id="login-password-error"></span>
+                        </div>
+
+                        <!-- Botão de login -->
+                        <button type="submit" class="login-btn" id="login-btn">
+                            <span class="btn-text">Entrar</span>
+                            <div class="btn-loader" style="display: none;">
+                                <div class="spinner"></div>
+                            </div>
+                        </button>
+
+                        <!-- Links auxiliares -->
+                        <div class="login-links">
+                            <a href="#" class="forgot-password" data-screen="recovery">Esqueci minha senha</a>
+                            <a href="#" class="register" data-screen="register">Criar conta</a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Tela de Recuperação de Senha -->
+                <div id="recovery-screen" class="auth-screen">
+                    <div class="recovery-header">
+                        <h2>Recuperar Senha</h2>
+                        <p>Digite seu e-mail e enviaremos as instruções para redefinir sua senha.</p>
+                    </div>
+                    
+                    <form id="recovery-form" class="recovery-form">
+                        <!-- Campo de email -->
+                        <div class="form-group">
+                            <label for="recovery-email">E-mail</label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="email" 
+                                    id="recovery-email" 
+                                    name="email" 
+                                    placeholder="seu@email.com"
+                                    autocomplete="email"
+                                    required
+                                >
+                                <span class="input-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                        <path d="m22 7-10 5L2 7"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                            <span class="error-message" id="recovery-email-error"></span>
+                        </div>
+
+                        <!-- Botão de envio -->
+                        <button type="submit" class="recovery-btn" id="recovery-btn">
+                            <span class="btn-text">Enviar Recuperação</span>
+                            <div class="btn-loader" style="display: none;">
+                                <div class="spinner"></div>
+                            </div>
+                        </button>
+
+                        <!-- Link para voltar -->
+                        <div class="recovery-links">
+                            <a href="#" class="back-to-login" data-screen="login">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                                    <polyline points="12 19 5 12 12 5"></polyline>
+                                </svg>
+                                Voltar para o login
+                            </a>
+                        </div>
+                    </form>
+
+                    <!-- Mensagem de sucesso da recuperação -->
+                    <div class="recovery-success" id="recovery-success" style="display: none;">
+                        <div class="success-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Email Enviado!</h3>
+                        <p>Verifique sua caixa de entrada e siga as instruções para redefinir sua senha.</p>
+                        <button type="button" class="back-to-login-btn" data-screen="login">
+                            Voltar para o login
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tela de Cadastro -->
+                <div id="register-screen" class="auth-screen">
+                    <div class="register-header">
+                        <h2>Criar Conta</h2>
+                        <p>Junte-se ao Family Hub e organize sua família.</p>
+                    </div>
+                    
+                    <form id="register-form" class="register-form">
+                        <!-- Campo de nome -->
+                        <div class="form-group">
+                            <label for="register-name">Nome Completo</label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="text" 
+                                    id="register-name" 
+                                    name="name" 
+                                    placeholder="Seu nome completo"
+                                    autocomplete="name"
+                                    required
+                                >
+                                <span class="input-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                </span>
+                            </div>
+                            <span class="error-message" id="register-name-error"></span>
+                        </div>
+
+                        <!-- Campo de email -->
+                        <div class="form-group">
+                            <label for="register-email">E-mail</label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="email" 
+                                    id="register-email" 
+                                    name="email" 
+                                    placeholder="seu@email.com"
+                                    autocomplete="email"
+                                    required
+                                >
+                                <span class="input-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                        <path d="m22 7-10 5L2 7"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                            <span class="error-message" id="register-email-error"></span>
+                        </div>
+
+                        <!-- Campo de senha -->
+                        <div class="form-group">
+                            <label for="register-password">Senha</label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="register-password" 
+                                    name="password" 
+                                    placeholder="Crie uma senha forte"
+                                    autocomplete="new-password"
+                                    required
+                                >
+                                <button type="button" class="toggle-password" id="toggle-register-password" title="Mostrar/ocultar senha">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path class="eye-open" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle class="eye-open" cx="12" cy="12" r="3"></circle>
+                                        <path class="eye-closed" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                        <line class="eye-closed" x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="error-message" id="register-password-error"></span>
+                            <div class="password-requirements">
+                                <p>A senha deve conter:</p>
+                                <ul>
+                                    <li id="req-length">Pelo menos 6 caracteres</li>
+                                    <li id="req-uppercase">Uma letra maiúscula</li>
+                                    <li id="req-lowercase">Uma letra minúscula</li>
+                                    <li id="req-number">Um número</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Campo de confirmar senha -->
+                        <div class="form-group">
+                            <label for="register-confirm-password">Confirmar Senha</label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="register-confirm-password" 
+                                    name="confirmPassword" 
+                                    placeholder="Digite a senha novamente"
+                                    autocomplete="new-password"
+                                    required
+                                >
+                                <button type="button" class="toggle-password" id="toggle-confirm-password" title="Mostrar/ocultar senha">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path class="eye-open" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle class="eye-open" cx="12" cy="12" r="3"></circle>
+                                        <path class="eye-closed" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                        <line class="eye-closed" x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="error-message" id="register-confirm-password-error"></span>
+                        </div>
+
+                        <!-- Termos e condições -->
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="register-terms" name="terms" required>
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-text">Eu aceito os <a href="#" class="terms-link">termos de uso</a> e <a href="#" class="privacy-link">política de privacidade</a></span>
+                            </label>
+                            <span class="error-message" id="register-terms-error"></span>
+                        </div>
+
+                        <!-- Botão de cadastro -->
+                        <button type="submit" class="register-btn" id="register-btn">
+                            <span class="btn-text">Criar Conta</span>
+                            <div class="btn-loader" style="display: none;">
+                                <div class="spinner"></div>
+                            </div>
+                        </button>
+
+                        <!-- Link para voltar -->
+                        <div class="register-links">
+                            <a href="#" class="back-to-login" data-screen="login">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                                    <polyline points="12 19 5 12 12 5"></polyline>
+                                </svg>
+                                Voltar para o login
+                            </a>
+                        </div>
+                    </form>
+
+                    <!-- Mensagem de sucesso do cadastro -->
+                    <div class="register-success" id="register-success" style="display: none;">
+                        <div class="success-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Conta Criada!</h3>
+                        <p>Sua conta foi criada com sucesso. Agora você pode fazer login.</p>
+                        <button type="button" class="back-to-login-btn" data-screen="login">
+                            Fazer Login
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mensagem de sucesso do login -->
+            <div class="login-success-message" id="login-success-message" style="display: none;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <p>Login realizado com sucesso!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script principal -->
+    <script type="module" src="../js/login.js"></script>
+</body>
+
+</html>

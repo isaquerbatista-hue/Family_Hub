@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Hub - Gerenciar Recompensas</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div id="layout-principal" class="layout-principal">
+        <!-- Menu lateral -->
+        <aside id="menu-lateral" class="menu-lateral">
+            <div class="sidebar-header">
+                <h1>Family Hub</h1>
+                <button id="toggle-sidebar" class="toggle-btn" title="Recolher Menu">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+            </div>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="../index.html">
+                            <img class="icon" src="../assets/icons/house-solid-full.svg" alt="#">
+                            <span class="menu-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tarefas.html">
+                            <img class="icon" src="../assets/icons/list-solid-full.svg" alt="#">
+                            <span class="menu-text">Gerenciar Tarefas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="recompensas.html" class="active">
+                            <img class="icon" src="../assets/icons/trophy-solid-full.svg" alt="#">
+                            <span class="menu-text">Gerenciar Recompensas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="membros.html">
+                            <img class="icon" src="../assets/icons/members.svg" alt="#">
+                            <span class="menu-text">Membros da Família</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="relatorios.html">
+                            <img class="icon" src="../assets/icons/chart-bar-solid-full.svg" alt="#">
+                            <span class="menu-text">Relatórios e Análises</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="configurações.html">
+                            <img class="icon" src="../assets/icons/gear-solid-full.svg" alt="#">
+                            <span class="menu-text">Configurações</span>
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <ul>
+                    <li>
+                        <a href="../login.html">
+                            <img class="icon" src="../assets/icons/solar_exit-bold.svg" alt="#">
+                            <span class="menu-text">Sair</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="conteudo-principal">
+            <header class="main-header">
+                <div class="header-content">
+                    <h2>Recompensas</h2>
+                    <div class="pontos-usuario">
+                        <span class="pontos-label">Seus pontos:</span>
+                        <span class="pontos-valor" id="pontos-atuais">5000</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-toggle-view" id="btn-toggle-view" title="Alternar visualização">
+                        <svg class="icon-grid" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        <svg class="icon-list" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                    </button>
+                    <button class="btn-novo" id="btn-nova-recompensa">+ Nova Recompensa</button>
+                </div>
+            </header>
+
+            <!-- Filtros e Busca -->
+            <section class="card">
+                <div class="filtros-container">
+                    <div class="filtro-grupo">
+                        <label>Buscar:</label>
+                        <input type="text" id="busca-recompensa" placeholder="Pesquisar recompensa...">
+                    </div>
+                    <div class="filtro-grupo">
+                        <label>Pontos:</label>
+                        <select id="filtro-pontos">
+                            <option value="">Todos</option>
+                            <option value="baixo">Até 500 pts</option>
+                            <option value="medio">501-1500 pts</option>
+                            <option value="alto">Mais de 1500 pts</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recompensas organizadas por categorias -->
+            <div id="recompensas-container">
+                <!-- Categorias serão renderizadas via JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Nova Recompensa -->
+    <div id="modal-recompensa" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-titulo">Nova Recompensa</h3>
+                <button class="modal-close" id="fechar-modal">&times;</button>
+            </div>
+            <form id="form-recompensa">
+                <div class="form-grupo">
+                    <label for="nome-recompensa">Nome da Recompensa *</label>
+                    <input type="text" id="nome-recompensa" required placeholder="Ex: Jantar fora">
+                </div>
+                <div class="form-grupo">
+                    <label for="descricao-recompensa">Descrição</label>
+                    <textarea id="descricao-recompensa" rows="3" placeholder="Detalhes da recompensa..."></textarea>
+                </div>
+                <div class="form-grupo">
+                    <label for="pontos-recompensa">Pontos Necessários *</label>
+                    <input type="number" id="pontos-recompensa" required min="1" placeholder="Ex: 50">
+                </div>
+                <div class="form-grupo">
+                    <label for="categoria-recompensa">Categoria</label>
+                    <select id="categoria-recompensa">
+                        <option value="viagem">✈️ Viagens</option>
+                        <option value="entretenimento">🎮 Entretenimento</option>
+                        <option value="descanso">😴 Descanso</option>
+                        <option value="compras">🛍️ Compras</option>
+                        <option value="comida">🍔 Comida</option>
+                        <option value="esportes">⚽ Esportes</option>
+                    </select>
+                </div>
+                <div class="form-grupo">
+                    <label for="limite-recompensa">Limite de Disponibilidade</label>
+                    <input type="number" id="limite-recompensa" min="1" placeholder="Ex: 5 (deixe vazio para ilimitado)">
+                </div>
+                <div class="form-grupo checkbox-grupo">
+                    <label>
+                        <input type="checkbox" id="ativo-recompensa" checked>
+                        <span>Recompensa ativa</span>
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancelar" id="cancelar-recompensa">Cancelar</button>
+                    <button type="submit" class="btn-salvar">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação de Resgate -->
+    <div id="modal-resgate" class="modal-overlay" style="display: none;">
+        <div class="modal-content modal-pequeno">
+            <div class="modal-header">
+                <h3>Confirmar Resgate</h3>
+                <button class="modal-close" id="fechar-modal-resgate">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Você tem certeza que deseja resgatar esta recompensa?</p>
+                <div class="resgate-info">
+                    <strong id="resgate-nome">Nome da Recompensa</strong>
+                    <span id="resgate-pontos">50 pontos</span>
+                </div>
+                <p class="aviso-pontos">Seus pontos atuais: <strong id="pontos-usuario">100</strong></p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-cancelar" id="cancelar-resgate">Cancelar</button>
+                <button type="button" class="btn-confirmar" id="confirmar-resgate">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/recompensas.js"></script>
+</body>
+
+</html>
