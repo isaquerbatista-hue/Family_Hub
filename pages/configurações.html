@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Hub - Configurações</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div id="layout-principal" class="layout-principal">
+
+        <aside id="menu-lateral" class="menu-lateral">
+            <div class="sidebar-header">
+                <h1>Family Hub</h1>
+                <button id="toggle-sidebar" class="toggle-btn" title="Recolher Menu">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+            </div>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="../index.html">
+                            <img class="icon" src="../assets/icons/house-solid-full.svg" alt="#">
+                            <span class="menu-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tarefas.html">
+                            <img class="icon" src="../assets/icons/list-solid-full.svg" alt="#">
+                            <span class="menu-text">Gerenciar Tarefas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="membros.html">
+                            <img class="icon" src="../assets/icons/members.svg" alt="#">
+                            <span class="menu-text">Membros da Família</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="relatorios.html">
+                            <img class="icon" src="../assets/icons/chart-bar-solid-full.svg" alt="#">
+                            <span class="menu-text">Relatórios e Análises</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="configurações.html" class="active">
+                            <img class="icon" src="../assets/icons/gear-solid-full.svg" alt="#">
+                            <span class="menu-text">Configurações</span>
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <ul>
+                    <li>
+                        <a href="login.html">
+                            <img class="icon" src="../assets/icons/solar_exit-bold.svg" alt="#">
+                            <span class="menu-text">Sair</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="conteudo-principal">
+            <h2>Configurações do Sistema</h2>
+            <p style="color: var(--text-secondary); margin-top: -24px; margin-bottom: 32px;">Gerencie suas preferências pessoais e as regras do Family Hub.</p>
+
+            <div class="grid-resumo" style="grid-template-columns: 1fr;"> <!-- Config blocks layout -->
+                <section>
+                    <h3>👤 Meu Perfil</h3>
+                    <form action="#" method="POST">
+                        <div style="margin-bottom: 16px;">
+                            <label style="display:block; margin-bottom: 4px; font-size: 14px;">Nome de Exibição:</label>
+                            <input type="text" name="nome" value="Pai" required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-primary);">
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <label style="display:block; margin-bottom: 4px; font-size: 14px;">E-mail de Login:</label>
+                            <input type="email" name="email" value="pai@email.com" required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-primary);">
+                        </div>
+                        <div style="margin-bottom: 24px;">
+                            <label style="display:block; margin-bottom: 4px; font-size: 14px;">Nova Senha:</label>
+                            <input type="password" name="senha" placeholder="Deixe em branco para manter" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-primary);">
+                        </div>
+                        <button type="submit" style="background: var(--bg-hover); color: var(--text-primary); border: 1px solid var(--border-color); padding: 10px 16px; border-radius: 6px; font-weight: 500; cursor: pointer;">Salvar Perfil</button>
+                    </form>
+                </section>
+
+                <section>
+                    <h3>🔔 Notificações e Lembretes</h3>
+                    <form action="#" method="POST">
+                        <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" name="notif_email" checked style="accent-color: var(--accent-color);">
+                            <label style="font-size: 14px;">Receber resumo diário por e-mail</label>
+                        </div>
+                        <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" name="notif_atraso" checked style="accent-color: var(--accent-color);">
+                            <label style="font-size: 14px;">Avisos de tarefas atrasadas</label>
+                        </div>
+                        <div style="margin-bottom: 24px; display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" name="notif_nova_tarefa" checked style="accent-color: var(--accent-color);">
+                            <label style="font-size: 14px;">Sempre que uma tarefa for atribuída a mim</label>
+                        </div>
+                        <button type="submit" style="background: var(--bg-hover); color: var(--text-primary); border: 1px solid var(--border-color); padding: 10px 16px; border-radius: 6px; font-weight: 500; cursor: pointer;">Salvar Preferências</button>
+                    </form>
+                </section>
+
+                <section>
+                    <h3>🏠 Dados da Família (Admin)</h3>
+                    <form action="#" method="POST">
+                        <div style="margin-bottom: 16px;">
+                            <label style="display:block; margin-bottom: 4px; font-size: 14px;">Nome da Família:</label>
+                            <input type="text" name="nome_familia" value="Família Silva" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-primary);">
+                        </div>
+                        <div style="margin-bottom: 24px;">
+                            <label style="display:block; margin-bottom: 4px; font-size: 14px;">Fuso Horário (para os prazos):</label>
+                            <select name="fuso_horario" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-primary);">
+                                <option value="America/Sao_Paulo" selected>Horário de Brasília (UTC-3)</option>
+                                <option value="America/Manaus">Manaus (UTC-4)</option>
+                            </select>
+                        </div>
+                        <button type="submit" style="background: var(--bg-hover); color: var(--text-primary); border: 1px solid var(--border-color); padding: 10px 16px; border-radius: 6px; font-weight: 500; cursor: pointer;">Atualizar Família</button>
+                    </form>
+                </section>
+
+                <section style="border-left: 4px solid var(--danger-color);">
+                    <h3 style="color: var(--danger-color);">⚠️ Zona de Perigo</h3>
+                    <p style="font-size: 14px; margin-bottom: 16px;">Ações irreversíveis para a sua conta.</p>
+                    <button type="button" style="background: transparent; color: var(--danger-color); border: 1px solid var(--danger-color); padding: 10px 16px; border-radius: 6px; font-weight: 500; cursor: pointer;">Apagar Minha Conta e Dados</button>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

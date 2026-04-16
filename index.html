@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Hub - Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="layout-principal" class="layout-principal">
+
+        <!-- Menu lateral -->
+        <aside id="menu-lateral" class="menu-lateral">
+            <div class="sidebar-header">
+                <h1>Family Hub</h1>
+                <button id="toggle-sidebar" class="toggle-btn" title="Recolher Menu">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+            </div>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="index.html" class="active">
+                            <img class="icon" src="assets/icons/house-solid-full.svg" alt="#">
+                            <span class="menu-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="pages/tarefas.html">
+                            <img class="icon" src="assets/icons/list-solid-full.svg" alt="#">
+                            <span class="menu-text">Gerenciar Tarefas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="pages/membros.html">
+                            <img class="icon" src="assets/icons/members.svg" alt="#">
+                            <span class="menu-text">Membros da Família</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="pages/relatorios.html">
+                            <img class="icon" src="assets/icons/chart-bar-solid-full.svg" alt="#">
+                            <span class="menu-text">Relatórios e Análises</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="pages/configurações.html">
+                            <img class="icon" src="assets/icons/gear-solid-full.svg" alt="#">
+                            <span class="menu-text">Configurações</span>
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <ul>
+                    <li>
+                        <a href="login.html">
+                            <img class="icon" src="assets/icons/solar_exit-bold.svg" alt="#">
+                            <span class="menu-text">Sair</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="conteudo-principal">
+            <header class="main-header">
+                <h2>Visão Geral da Família</h2>
+                <button class="btn-novo">Nova Atividade</button>
+            </header>
+
+            <div class="grid-resumo">
+                <!-- Linha 1 -->
+                <section class="card col-1">
+                    <h3>Métricas Rápidas</h3>
+                    <div class="metricas">
+                        <div class="metrica-item">
+                            <span class="m-valor">5</span>
+                            <span class="m-lbl">Pendentes</span>
+                        </div>
+                        <div class="metrica-item">
+                            <span class="m-valor">2</span>
+                            <span class="m-lbl">Concluídas</span>
+                        </div>
+                        <div class="metrica-item m-perigo">
+                            <span class="m-valor">1</span>
+                            <span class="m-lbl">Atrasada</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card col-1">
+                    <h3>Meta Semanal</h3>
+                    <div class="progresso-wrapper">
+                        <span class="prog_lbl">60% Concluído</span>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Linha 2 -->
+                <section class="card col-2">
+                    <h3>Ação Imediata</h3>
+                    <ul class="lista-tarefas">
+                        <li>
+                            <label class="t-checkbox">
+                                <input type="checkbox">
+                                <span class="t-texto">Lavar o carro</span>
+                            </label>
+                            <div class="t-info">
+                                <span class="tag-prioridade prio-alta">Alta</span>
+                                <span class="t-resp">Filho 1</span>
+                            </div>
+                        </li>
+                        <li>
+                            <label class="t-checkbox">
+                                <input type="checkbox">
+                                <span class="t-texto">Pagar contas de luz</span>
+                            </label>
+                            <div class="t-info">
+                                <span class="tag-prioridade prio-alta">Alta</span>
+                                <span class="t-resp">Mãe</span>
+                            </div>
+                        </li>
+                        <li>
+                            <label class="t-checkbox">
+                                <input type="checkbox">
+                                <span class="t-texto">Ir ao mercado</span>
+                            </label>
+                            <div class="t-info">
+                                <span class="tag-prioridade prio-media">Média</span>
+                                <span class="t-resp">Pai</span>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="card col-2">
+                    <h3>Mini-Agenda</h3>
+                    <ul class="lista-agenda">
+                        <li>
+                            <span class="cat-dot cat-escolar"></span>
+                            <div class="age-detalhe">
+                                <strong>Reunião de Pais</strong>
+                                <span>Hoje, 19:00</span>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="cat-dot cat-esportes"></span>
+                            <div class="age-detalhe">
+                                <strong>Futebol (Filho 1)</strong>
+                                <span>Amanhã, 08:00</span>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="cat-dot cat-sociais"></span>
+                            <div class="age-detalhe">
+                                <strong>Almoço em Família</strong>
+                                <span>Dom, 13:00</span>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Linha 3 -->
+                <section class="card col-1">
+                    <h3>Ranking da Tribo</h3>
+                    <ul class="lista-ranking">
+                        <li><span class="rk-pos gold">1º</span> <strong>Mãe</strong> <span>15 pts</span></li>
+                        <li><span class="rk-pos silver">2º</span> <strong>Filho 1</strong> <span>8 pts</span></li>
+                        <li><span class="rk-pos bronze">3º</span> <strong>Pai</strong> <span>5 pts</span></li>
+                    </ul>
+                </section>
+
+                <section class="card col-1">
+                    <h3>Últimas Notificações</h3>
+                    <ul class="lista-notificacoes">
+                        <li>Pai concluiu <span class="nl-hilite">Supermercado</span> <small>10m</small></li>
+                        <li>Mãe adicionou <span class="nl-hilite">Lavar Louça</span> <small>2h</small></li>
+                    </ul>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/sidebar.js"></script>
+</body>
+
+</html>

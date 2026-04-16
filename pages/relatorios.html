@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Hub - Relatórios</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div id="layout-principal" class="layout-principal">
+
+        <aside id="menu-lateral" class="menu-lateral">
+            <div class="sidebar-header">
+                <h1>Family Hub</h1>
+                <button id="toggle-sidebar" class="toggle-btn" title="Recolher Menu">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+            </div>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="../index.html">
+                            <img class="icon" src="../assets/icons/house-solid-full.svg" alt="#">
+                            <span class="menu-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tarefas.html">
+                            <img class="icon" src="../assets/icons/list-solid-full.svg" alt="#">
+                            <span class="menu-text">Gerenciar Tarefas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="membros.html">
+                            <img class="icon" src="../assets/icons/members.svg" alt="#">
+                            <span class="menu-text">Membros da Família</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="relatorios.html" class="active">
+                            <img class="icon" src="../assets/icons/chart-bar-solid-full.svg" alt="#">
+                            <span class="menu-text">Relatórios e Análises</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="configurações.html">
+                            <img class="icon" src="../assets/icons/gear-solid-full.svg" alt="#">
+                            <span class="menu-text">Configurações</span>
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <ul>
+                    <li>
+                        <a href="login.html">
+                            <img class="icon" src="../assets/icons/solar_exit-bold.svg" alt="#">
+                            <span class="menu-text">Sair</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="conteudo-principal">
+            <h2>Relatórios de Produtividade</h2>
+
+            <div class="grid-resumo">
+                <section>
+                    <h3>Tarefas Concluídas por Membro</h3>
+                    <ul>
+                        <li><span>Mãe</span> <strong>15 tarefas</strong></li>
+                        <li><span>Pai</span> <strong>10 tarefas</strong></li>
+                        <li><span>Filho 1</span> <strong>8 tarefas</strong></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Distribuição por Categorias</h3>
+                    <div style="background: var(--bg-hover); border-radius: 8px; padding: 20px; display: flex; align-items: center; justify-content: center; height: 100%;">
+                        <span style="color: var(--text-secondary); text-align: center;">[Gráfico de Pizza: Limpeza 40%, Compras 30%, Outros 30%]</span>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>
