@@ -43,4 +43,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Desenha o calendário na tela
         calendar.render();
     }
+
 });
+
