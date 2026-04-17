@@ -10,7 +10,7 @@
         /* ─── MEMBROS PAGE STYLES ─── */
         :root {
             --card-radius: 12px;
-            --card-bg: var(--bg-secondary, #1e1e2e);
+            --card-bg: var(--bg-panel, #DEE7E7);
             --transition: 0.2s ease;
         }
 
@@ -99,7 +99,7 @@
 
         .view-toggle button.active {
             background: var(--accent-color);
-            color: #fff;
+            color: #F4FAFF;
         }
 
         .view-toggle button:hover:not(.active) {
@@ -113,7 +113,7 @@
             align-items: center;
             gap: 6px;
             background: var(--accent-color);
-            color: #fff;
+            color: var(--text-white);
             border: none;
             padding: 9px 16px;
             border-radius: 8px;
@@ -434,7 +434,7 @@
         .card-action-btn:hover {
             background: var(--accent-color);
             border-color: var(--accent-color);
-            color: #fff;
+            color: #F4FAFF;
         }
 
         .card-action-btn.danger {
@@ -445,7 +445,7 @@
         .card-action-btn.danger:hover {
             background: var(--danger-color);
             border-color: var(--danger-color);
-            color: #fff;
+            color: var(--text-primary);
         }
 
         /* Footer bar */
@@ -522,7 +522,7 @@
         .page-btn.active {
             background: var(--accent-color);
             border-color: var(--accent-color);
-            color: #fff;
+            color: var(--text-primary);
             font-weight: 700;
         }
 
@@ -666,7 +666,7 @@
             border-radius: 8px;
             border: none;
             background: var(--accent-color);
-            color: #fff;
+            color: #F4FAFF;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;

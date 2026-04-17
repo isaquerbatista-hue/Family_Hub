@@ -1,5 +1,16 @@
 /* Estilos específicos para a página de login */
 
+:root {
+    --bg-main: #F4FAFF;
+    --bg-panel: #DEE7E7;
+    --bg-hover: #B7ADCF;
+    --border-color: #A8B5C0;
+    --text-primary: #6B7B8A;
+    --text-secondary: #8B9BAA;
+    --accent-color: #7A8A9A;
+    --danger-color: #B7ADCF;
+}
+
 /* Reset de estilos para a página de login */
 body, html {
     margin: 0;
