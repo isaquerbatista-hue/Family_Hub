@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
 :root {
-    --bg-main: #121212;
-    --bg-panel: #1c1c1c;
-    --bg-hover: #2e2e2e;
-    --border-color: #2e2e2e;
-    --text-primary: #ededed;
-    --text-secondary: #a1a1a1;
-    --accent-color: #24b47e;
-    --danger-color: #f56565;
+    --bg-main: #F4FAFF;
+    --bg-panel: #DEE7E7;
+    --bg-hover: #B7ADCF;
+    --border-color: #A8B5C0;
+    --text-primary: #6B7B8A;
+    --text-secondary: #8B9BAA;
+    --accent-color: #7A8A9A;
+    --danger-color: #B7ADCF;
 }
 
 body, html {
