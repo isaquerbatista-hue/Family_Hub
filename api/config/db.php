@@ -9,7 +9,7 @@ define('DB_HOST', 'localhost');
 define('DB_PORT', '3306');
 define('DB_NAME', 'family_hub');
 define('DB_USER', 'root');          // troque pelo seu usuário MySQL
-define('DB_PASS', '');              // troque pela sua senha MySQL
+define('DB_PASS', 'Senai@118');              // troque pela sua senha MySQL
 define('DB_CHARSET', 'utf8mb4');
 
 function getDB(): PDO {

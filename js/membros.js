@@ -7,6 +7,7 @@ import { API } from './api.js';
 
 let membroLogado = null;
 let membros      = [];
+let editingMembroId = null;
 
 /* ----------------------------------------------------------------
    Inicialização
@@ -17,7 +18,7 @@ async function init() {
 
   await loadMembros();
   renderMembros();
-  setupModal();
+  attachEventListeners();
 }
 
 function waitForFH(timeout = 5000) {
@@ -36,6 +37,7 @@ function waitForFH(timeout = 5000) {
 async function loadMembros() {
   try {
     membros = await API.get('membros/index.php');
+    console.log('Membros carregados:', membros);
   } catch (error) {
     console.error('loadMembros:', error);
   }
@@ -46,7 +48,10 @@ async function loadMembros() {
 ---------------------------------------------------------------- */
 function renderMembros() {
   const grid = document.getElementById('members-grid');
-  if (!grid) return;
+  if (!grid) {
+    console.error('❌ Element #members-grid não encontrado');
+    return;
+  }
 
   grid.innerHTML = membros.map(m => {
     const isYou = m.id === membroLogado.id;
@@ -80,15 +85,15 @@ function renderMembros() {
       </div>
       <div class="card-actions">
         ${isAdmin || isYou
-          ? `<button class="card-action-btn" onclick="editMembro('${m.id}')">Editar</button>`
+          ? `<button class="card-action-btn" onclick="window.editMembro('${m.id}')">Editar</button>`
           : ''}
         ${isAdmin && !isYou
-          ? `<button class="card-action-btn danger" onclick="removeMembro('${m.id}')">Remover</button>`
+          ? `<button class="card-action-btn danger" onclick="window.removeMembro('${m.id}')">Remover</button>`
           : ''}
       </div>
     </div>`;
   }).join('') + `
-  <div class="member-card add-card" id="add-member-card" onclick="openAddModal()">
+  <div class="member-card add-card" id="add-member-card" onclick="window.openAddModal()">
     <div class="add-card-icon">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round">
@@ -100,51 +105,105 @@ function renderMembros() {
     </div>
     <span class="add-card-label">Adicionar Membro</span>
   </div>`;
+
+  console.log('✅ Grid renderizado com', membros.length, 'membros');
+  attachEventListeners();
 }
 
 /* ----------------------------------------------------------------
-   Modal adicionar / editar membro
+   Event Listeners (chamado toda vez que renderiza)
 ---------------------------------------------------------------- */
-let editingMembroId = null;
-
-function setupModal() {
+function attachEventListeners() {
+  // Modal elements
   const overlay = document.getElementById('modal-overlay');
   const form    = document.getElementById('form-membro');
   const cancel  = document.getElementById('cancelar-membro');
   const close   = document.getElementById('fechar-modal-membro');
+  const btnOpen = document.getElementById('btn-open-modal');
+  
+  // View toggle
+  const btnGrid = document.getElementById('btn-grid');
+  const btnList = document.getElementById('btn-list');
+  const grid    = document.getElementById('members-grid');
 
-  [overlay, cancel, close].forEach(el => {
-    el?.addEventListener('click', (e) => {
-      if (e.target === overlay || e.target !== overlay) closeModal();
+  // Remove old listeners (para evitar duplicatas)
+  if (overlay) {
+    overlay.replaceWith(overlay.cloneNode(true));
+    const newOverlay = document.getElementById('modal-overlay');
+    newOverlay?.addEventListener('click', e => {
+      if (e.target === newOverlay) closeModal();
     });
-  });
-  overlay?.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  }
 
+  // Botão abrir modal
+  btnOpen?.addEventListener('click', () => {
+    console.log('✅ Clique em + Adicionar');
+    window.openAddModal();
+  });
+
+  // Botões fechar modal
+  cancel?.addEventListener('click', () => {
+    console.log('✅ Clique em Cancelar');
+    closeModal();
+  });
+  
+  close?.addEventListener('click', () => {
+    console.log('✅ Clique em X (fechar)');
+    closeModal();
+  });
+
+  // Form: enviar
   form?.addEventListener('submit', handleSaveMembro);
+
+  // View toggle: Grid
+  btnGrid?.addEventListener('click', () => {
+    console.log('✅ Clique em Grid');
+    btnGrid.classList.add('active');
+    btnList?.classList.remove('active');
+    grid.style.gridTemplateColumns = '';
+  });
+
+  // View toggle: List
+  btnList?.addEventListener('click', () => {
+    console.log('✅ Clique em List');
+    btnList.classList.add('active');
+    btnGrid?.classList.remove('active');
+    grid.style.gridTemplateColumns = '1fr';
+  });
 }
 
+/* ================================================================
+   Funções da Modal
+================================================================ */
+
 window.openAddModal = function() {
+  console.log('🔓 Abrindo modal para ADICIONAR');
   editingMembroId = null;
   document.getElementById('modal-membro-titulo').textContent = 'Adicionar Membro';
   document.getElementById('f-membro-nome').value   = '';
   document.getElementById('f-membro-email').value  = '';
   document.getElementById('f-membro-papel').value  = 'membro';
-  document.getElementById('modal-overlay').style.display = 'flex';
+  document.getElementById('modal-overlay').classList.add('open');
 };
 
 window.editMembro = function(id) {
+  console.log('✏️ Abrindo modal para EDITAR:', id);
   const m = membros.find(x => x.id === id);
-  if (!m) return;
+  if (!m) {
+    console.error('❌ Membro não encontrado:', id);
+    return;
+  }
   editingMembroId = id;
   document.getElementById('modal-membro-titulo').textContent = 'Editar Membro';
   document.getElementById('f-membro-nome').value   = m.nome;
   document.getElementById('f-membro-email').value  = m.email;
   document.getElementById('f-membro-papel').value  = m.papel;
-  document.getElementById('modal-overlay').style.display = 'flex';
+  document.getElementById('modal-overlay').classList.add('open');
 };
 
 function closeModal() {
-  document.getElementById('modal-overlay').style.display = 'none';
+  console.log('🔒 Fechando modal');
+  document.getElementById('modal-overlay').classList.remove('open');
 }
 
 async function handleSaveMembro(e) {
@@ -153,15 +212,18 @@ async function handleSaveMembro(e) {
   const email = document.getElementById('f-membro-email').value.trim();
   const papel = document.getElementById('f-membro-papel').value;
 
+  console.log('💾 Salvando membro:', { nome, email, papel });
+
   try {
     if (editingMembroId) {
-      // Editar
+      console.log('📝 Editando membro:', editingMembroId);
       await API.put('membros/update.php', { id: editingMembroId, nome, email, papel });
     } else {
-      // Adicionar
+      console.log('➕ Adicionando novo membro');
       await API.post('membros/index.php', { nome, email, papel });
     }
   } catch (error) {
+    console.error('❌ Erro ao salvar:', error);
     alert('Erro: ' + error.message);
     return;
   }
@@ -172,10 +234,16 @@ async function handleSaveMembro(e) {
 }
 
 window.removeMembro = async function(id) {
-  if (!confirm('Remover este membro da família?')) return;
+  console.log('🗑️ Removendo membro:', id);
+  if (!confirm('Remover este membro da família?')) {
+    console.log('❌ Remoção cancelada pelo usuário');
+    return;
+  }
   try {
     await API.delete('membros/delete.php', { id });
+    console.log('✅ Membro removido');
   } catch (error) {
+    console.error('❌ Erro ao remover:', error);
     alert('Erro: ' + error.message);
     return;
   }
@@ -183,7 +251,10 @@ window.removeMembro = async function(id) {
   renderMembros();
 };
 
-/* ----------------------------------------------------------------
+/* ================================================================
    Boot
----------------------------------------------------------------- */
-document.addEventListener('DOMContentLoaded', () => init().catch(console.error));
+================================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('📄 DOMContentLoaded - Iniciando membros.js');
+  init().catch(err => console.error('❌ Erro na init:', err));
+});

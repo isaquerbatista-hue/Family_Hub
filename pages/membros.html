@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family Hub - Membros</title>
+    <link rel="icon" type="image/png" href="/assets/icons/house-solid-full.svg">
     <link rel="stylesheet" href="../css/style.css">
     <style>
         /* ─── MEMBROS PAGE STYLES ─── */
@@ -972,85 +973,40 @@
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal">
             <div class="modal-header">
-                <h3>Convidar Novo Membro</h3>
-                <button class="modal-close" id="modal-close">
+                <h3 id="modal-membro-titulo">Adicionar Membro</h3>
+                <button class="modal-close" id="fechar-modal-membro" type="button">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
             </div>
-            <div class="form-grid-2">
-                <div class="form-group">
-                    <label>Nome</label>
-                    <input type="text" placeholder="Ex: Filho 2">
+            <form id="form-membro">
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" id="f-membro-nome" placeholder="Ex: Filho 2" required>
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" id="f-membro-email" placeholder="email@exemplo.com" required>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label>E-mail</label>
-                    <input type="email" placeholder="email@exemplo.com">
+                    <label>Função</label>
+                    <select id="f-membro-papel">
+                        <option value="membro">Membro Standard</option>
+                        <option value="admin">Administrador</option>
+                    </select>
                 </div>
-            </div>
-            <div class="form-group">
-                <label>Função</label>
-                <select>
-                    <option>Membro Standard</option>
-                    <option>Administrador</option>
-                </select>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-cancel" id="btn-cancel">Cancelar</button>
-                <button class="btn-invite">Enviar Convite</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" id="cancelar-membro">Cancelar</button>
+                    <button type="submit" class="btn-invite">Enviar Convite</button>
+                </div>
+            </form>
         </div>
     </div>
 
     <script src="../js/sidebar.js"></script>
     <script src="../js/main.js"></script>
-    <script>
-        // Modal
-        const modalOverlay = document.getElementById('modal-overlay');
-        const btnOpenModal = document.getElementById('btn-open-modal');
-        const addMemberCard = document.getElementById('add-member-card');
-        const modalClose = document.getElementById('modal-close');
-        const btnCancel = document.getElementById('btn-cancel');
-
-        function openModal() { modalOverlay.classList.add('open'); }
-        function closeModal() { modalOverlay.classList.remove('open'); }
-
-        btnOpenModal.addEventListener('click', openModal);
-        addMemberCard.addEventListener('click', openModal);
-        modalClose.addEventListener('click', closeModal);
-        btnCancel.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
-
-        // View toggle
-        const btnGrid = document.getElementById('btn-grid');
-        const btnList = document.getElementById('btn-list');
-        const grid = document.getElementById('members-grid');
-
-        btnGrid.addEventListener('click', () => {
-            btnGrid.classList.add('active');
-            btnList.classList.remove('active');
-            grid.style.gridTemplateColumns = '';
-        });
-
-        btnList.addEventListener('click', () => {
-            btnList.classList.add('active');
-            btnGrid.classList.remove('active');
-            grid.style.gridTemplateColumns = '1fr';
-        });
-
-        // Danger confirmation
-        document.querySelectorAll('.card-action-btn.danger').forEach(btn => {
-            btn.addEventListener('click', e => {
-                e.stopPropagation();
-                if (confirm('Remover este membro da família?')) {
-                    btn.closest('.member-card').style.animation = 'cardIn 0.2s ease reverse';
-                    setTimeout(() => btn.closest('.member-card').remove(), 180);
-                }
-            });
-        });
-
-        // Keyboard close
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-    </script>
+    <script type="module" src="../js/membros.js"></script>
 </body>
 
 </html>
