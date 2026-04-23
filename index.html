@@ -70,127 +70,112 @@
             </nav>
         </aside>
 
-        <main class="conteudo-principal">
-            <header class="main-header">
-                <h2>Visão Geral da Família</h2>
-                <button class="btn-novo">Nova Atividade</button>
+        <main class="conteudo-principal dashboard-main">
+            <!-- Header Section -->
+            <header class="dash-header">
+                <div class="dh-left">
+                    <h2>Visão Geral</h2>
+                </div>
+                <div class="dh-right">
+                    <div class="global-search">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" placeholder="Buscar...">
+                    </div>
+                    <div class="date-filters">
+                        <button class="active">Hoje</button>
+                        <button>Semana</button>
+                        <button>Mês</button>
+                    </div>
+                    <div class="notif-btn" id="bell-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        <span class="badge" id="notif-badge">0</span>
+                    </div>
+                </div>
             </header>
 
-            <div class="grid-resumo">
-                <!-- Linha 1 -->
-                <section class="card col-1">
-                    <h3>Métricas Rápidas</h3>
-                    <div class="metricas">
-                        <div class="metrica-item">
-                            <span class="m-valor">5</span>
-                            <span class="m-lbl">Pendentes</span>
-                        </div>
-                        <div class="metrica-item">
-                            <span class="m-valor">2</span>
-                            <span class="m-lbl">Concluídas</span>
-                        </div>
-                        <div class="metrica-item m-perigo">
-                            <span class="m-valor">1</span>
-                            <span class="m-lbl">Atrasada</span>
-                        </div>
+            <!-- KPIs Section -->
+            <div class="kpi-grid">
+                <div class="kpi-card danger">
+                    <div class="kpi-info">
+                        <span class="kpi-val" id="kpi-atrasadas">0</span>
+                        <span class="kpi-lbl">Atrasadas</span>
                     </div>
+                </div>
+                <div class="kpi-card warning">
+                    <div class="kpi-info">
+                        <span class="kpi-val" id="kpi-pendentes">0</span>
+                        <span class="kpi-lbl">A Fazer</span>
+                    </div>
+                </div>
+                <div class="kpi-card success">
+                    <div class="kpi-info">
+                        <span class="kpi-val" id="kpi-concluidas">0</span>
+                        <span class="kpi-lbl">Concluídas Hoje</span>
+                    </div>
+                </div>
+                <div class="kpi-card neutral">
+                    <div class="kpi-info">
+                        <span class="kpi-val" id="kpi-pontos">0</span>
+                        <span class="kpi-lbl">Pontos da Família</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Central Section -->
+            <div class="central-grid">
+                <!-- Prioridade top-left: Ação Imediata -->
+                <section class="card col-main">
+                    <div class="card-header-flex">
+                        <h3>Ação Imediata</h3>
+                        <button class="btn-novo" id="btn-nova-tarefa">+ Nova Tarefa</button>
+                    </div>
+                    <ul class="lista-tarefas clean-list" id="lista-urgentes-nova">
+                        <li>Carregando...</li>
+                    </ul>
                 </section>
 
-                <section class="card col-1">
-                    <h3>Meta Semanal</h3>
-                    <div class="progresso-wrapper">
-                        <span class="prog_lbl">60% Concluído</span>
+                <section class="card col-side">
+                    <h3>Progresso da Semana</h3>
+                    <div class="progresso-wrapper" style="margin-top: 16px;">
+                        <span class="prog_lbl" id="prog_lbl">0%</span>
                         <div class="progress-bar-bg">
-                            <div class="progress-bar-fill" style="width: 60%;"></div>
+                            <div class="progress-bar-fill" id="prog_fill" style="width: 0%;"></div>
                         </div>
                     </div>
-                </section>
 
-                <!-- Linha 2 -->
-                <section class="card col-2">
-                    <h3>Ação Imediata</h3>
-                    <ul class="lista-tarefas">
-                        <li>
-                            <label class="t-checkbox">
-                                <input type="checkbox">
-                                <span class="t-texto">Lavar o carro</span>
-                            </label>
-                            <div class="t-info">
-                                <span class="tag-prioridade prio-alta">Alta</span>
-                                <span class="t-resp">Filho 1</span>
-                            </div>
-                        </li>
-                        <li>
-                            <label class="t-checkbox">
-                                <input type="checkbox">
-                                <span class="t-texto">Pagar contas de luz</span>
-                            </label>
-                            <div class="t-info">
-                                <span class="tag-prioridade prio-alta">Alta</span>
-                                <span class="t-resp">Mãe</span>
-                            </div>
-                        </li>
-                        <li>
-                            <label class="t-checkbox">
-                                <input type="checkbox">
-                                <span class="t-texto">Ir ao mercado</span>
-                            </label>
-                            <div class="t-info">
-                                <span class="tag-prioridade prio-media">Média</span>
-                                <span class="t-resp">Pai</span>
-                            </div>
-                        </li>
+                    <h3 style="margin-top: 32px;">Próximos Eventos</h3>
+                    <ul class="lista-agenda" id="lista-agenda-nova" style="margin-top: 16px;">
+                        <li>Carregando...</li>
                     </ul>
                 </section>
+            </div>
 
-                <section class="card col-2">
-                    <h3>Mini-Agenda</h3>
-                    <ul class="lista-agenda">
-                        <li>
-                            <span class="cat-dot cat-escolar"></span>
-                            <div class="age-detalhe">
-                                <strong>Reunião de Pais</strong>
-                                <span>Hoje, 19:00</span>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="cat-dot cat-esportes"></span>
-                            <div class="age-detalhe">
-                                <strong>Futebol (Filho 1)</strong>
-                                <span>Amanhã, 08:00</span>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="cat-dot cat-sociais"></span>
-                            <div class="age-detalhe">
-                                <strong>Almoço em Família</strong>
-                                <span>Dom, 13:00</span>
-                            </div>
-                        </li>
-                    </ul>
-                </section>
-
-                <!-- Linha 3 -->
-                <section class="card col-1">
-                    <h3>Ranking da Tribo</h3>
-                    <ul class="lista-ranking">
-                        <li><span class="rk-pos gold">1º</span> <strong>Mãe</strong> <span>15 pts</span></li>
-                        <li><span class="rk-pos silver">2º</span> <strong>Filho 1</strong> <span>8 pts</span></li>
-                        <li><span class="rk-pos bronze">3º</span> <strong>Pai</strong> <span>5 pts</span></li>
-                    </ul>
-                </section>
-
-                <section class="card col-1">
-                    <h3>Últimas Notificações</h3>
-                    <ul class="lista-notificacoes">
-                        <li>Pai concluiu <span class="nl-hilite">Supermercado</span> <small>10m</small></li>
-                        <li>Mãe adicionou <span class="nl-hilite">Lavar Louça</span> <small>2h</small></li>
-                    </ul>
+            <!-- Table Section -->
+            <div class="table-section">
+                <section class="card">
+                    <h3>Últimas Atividades</h3>
+                    <div class="table-responsive">
+                        <table class="activities-table">
+                            <thead>
+                                <tr>
+                                    <th>Tarefa / Atividade</th>
+                                    <th>Prioridade</th>
+                                    <th>Responsável</th>
+                                    <th>Prazo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-activities">
+                                <tr><td colspan="4" style="text-align:center;">Carregando...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </section>
             </div>
         </main>
     </div>
 
+    <script type="module" src="js/auth-guard.js"></script>
+    <script type="module" src="js/dashboard.js"></script>
     <script src="js/sidebar.js"></script>
 </body>
 

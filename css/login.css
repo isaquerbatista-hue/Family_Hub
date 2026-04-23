@@ -1,14 +1,15 @@
 /* Estilos específicos para a página de login */
 
 :root {
-    --bg-main: #F4FAFF;
-    --bg-panel: #DEE7E7;
-    --bg-hover: #B7ADCF;
-    --border-color: #A8B5C0;
-    --text-primary: #6B7B8A;
-    --text-secondary: #8B9BAA;
-    --accent-color: #7A8A9A;
-    --danger-color: #B7ADCF;
+    --bg-main: #FFFFFF;
+    --bg-panel: #F4F5F9;
+    --bg-hover: #BDEDE0;
+    --border-color: #BBDBD1;
+    --text-primary: #2B2A36;
+    --text-secondary: #7E78D2;
+    --accent-color: #6F58C9;
+    --accent-light: #B6B8D6;
+    --danger-color: #E24B4A;
 }
 
 /* Reset de estilos para a página de login */
@@ -48,9 +49,9 @@ header {
     right: 0;
     bottom: 0;
     background: 
-        radial-gradient(circle at 20% 50%, rgba(36, 180, 126, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(36, 180, 126, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 40% 20%, rgba(36, 180, 126, 0.08) 0%, transparent 50%);
+        radial-gradient(circle at 20% 50%, rgba(111, 88, 201, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(126, 120, 210, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(182, 184, 214, 0.1) 0%, transparent 50%);
     animation: backgroundFloat 20s ease-in-out infinite;
 }
 
@@ -66,8 +67,8 @@ header {
     max-height: 80vh;
     box-shadow: 
         0 20px 25px -5px rgba(0, 0, 0, 0.3),
-        0 10px 10px -5px rgba(0, 0, 0, 0.2),
-        0 0 0 1px rgba(36, 180, 126, 0.1);
+        0 10px 10px -5px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(111, 88, 201, 0.1);
     position: relative;
     z-index: 1;
     animation: slideUp 0.6s ease-out;
@@ -110,18 +111,18 @@ header {
     width: 60px;
     height: 60px;
     margin: 0 auto 16px;
-    background: rgba(36, 180, 126, 0.1);
+    background: rgba(111, 88, 201, 0.1);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(36, 180, 126, 0.2);
+    border: 1px solid rgba(111, 88, 201, 0.2);
 }
 
 .logo img {
     width: 32px;
     height: 32px;
-    filter: invert(0.5) sepia(1) saturate(5) hue-rotate(110deg) brightness(1.2);
+    filter: invert(41%) sepia(45%) saturate(1074%) hue-rotate(222deg) brightness(85%) contrast(85%);
 }
 
 .login-header h1 {
