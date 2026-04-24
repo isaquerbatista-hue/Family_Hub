@@ -1,4 +1,4 @@
-# 🏠 FamilyHub v2 — Gestão da Tribo
+# FamilyHub v2 — Gestão da Familia
 
 ## Como Rodar
 ```bash
