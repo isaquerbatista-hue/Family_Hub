@@ -60,7 +60,7 @@
       <h2>Criar nova família</h2>
       <div class="err" id="err-cadastrar"></div>
       <div class="fg"><label>Nome da família</label><input type="text" id="reg-nome" placeholder="Ex: Família Silva"></div>
-      <div class="fg"><label>Código único</label><input type="text" id="reg-codigo" placeholder="Ex: SILVA2024" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase().replace(/\s/g,'')">
+      <div class="fg"><label>Código único</label><input type="text" id="reg-codigo" placeholder="Ex: SILVA2024" oninput="this.value=this.value.toUpperCase().replace(/\s/g,'')">
         <div class="hint">3–20 caracteres, sem espaços. Compartilhe com a família.</div></div>
       <div class="fg"><label>Senha</label><input type="password" id="reg-senha" placeholder="Crie uma senha"></div>
       <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:6px" onclick="doRegister()">
